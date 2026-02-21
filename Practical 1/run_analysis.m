@@ -1,0 +1,170 @@
+% =========================================================================
+% Practical 1: 2D Convolution Analysis
+% =========================================================================
+%
+% GROUP NUMBER: 27
+%
+% MEMBERS:
+%   - Member 1 Max Mendelow, MNDMAX003
+%   - Member 2 Sharaav Dhebideen, DHBSHA001
+
+
+%% ========================================================================
+%  PART 1: Manual 2D Convolution Implementation
+%  ========================================================================
+%
+% REQUIREMENT: You may NOT use built-in convolution functions (conv2, imfilter, etc.)
+
+% TODO: Implement manual 2D convolution using Sobel Operator(Gx and Gy)
+% output - Convolved image result (grayscale)
+function [G, exetime] = my_conv2(image, Kx, Ky) %Add necessary input arguments
+    
+    start = tic; % start timer
+
+    % Import the image
+    I  = im2double(im2gray(image)); % Each pixel is assigned a value between 0 and 1.
+    [m, n] = size(I);
+
+    % Padding image edges
+    a = zeros(1, n);
+    b = zeros(m+2, 1);
+    Q = [a; I; a];
+    I_padded = [b, Q, b]; % Edge padded image matrix
+    
+    % Performing the 2D convolution
+    G = zeros(m, n); % Edge detection matrix with gradient magnitudes
+    for x = 1:m
+        for y = 1:n
+            p1 = I_padded(x, y);    p2 = I_padded(x, y+1);
+            p3 = I_padded(x, y+2);  p4 = I_padded(x+1, y);
+            p6 = I_padded(x+1, y+2);    p7 = I_padded(x+2, y);
+            p8 = I_padded(x+2, y+1);    p9 = I_padded(x+2, y+2);
+
+            vert_gradient = abs((p1*Ky(1, 1) + p2*Ky(1, 2) + p3*Ky(1, 3)) + (p7*Ky(3, 1) + p8*Ky(3, 2) + p9*Ky(3, 3)));
+            horz_gradient = abs((p3*Kx(1, 3) + p6*Kx(2, 3) + p9*Kx(3, 3)) + (p1*Kx(1, 1) + p4*Kx(2, 1) + p7*Kx(3, 1)));
+
+            G(x, y) =  vert_gradient + horz_gradient;
+        end
+    end
+
+    exetime = toc(start); % end timer
+end
+
+%% ========================================================================
+%  PART 2: Built-in 2D Convolution Implementation
+%  ========================================================================
+%   
+% REQUIREMENT: You MUST use the built-in conv2 function
+
+% TODO: Use conv2 to perform 2D convolution
+% output - Convolved image result (grayscale)
+function [G, exetime] = inbuilt_conv2(image, Kx, Ky) %Add necessary input arguments
+    
+    start = tic; % start timer
+
+    % Import the image
+    I  = im2double(im2gray(image)); % Each pixel is assigned a value between 0 and 1.
+    
+    % Performing the 2D convolution
+    Gx = conv2(I, Kx, 'same');
+    Gy = conv2(I, Ky, 'same');
+    G = sqrt(Gx.^2 + Gy.^2);
+
+    exetime = toc(start); % end timer
+end
+
+
+%% ========================================================================
+%  PART 3: Testing and Analysis
+%  ========================================================================
+%
+% Compare the performance of manual 2D convolution (my_conv2) with MATLAB's
+% built-in conv2 function (inbuilt_conv2).
+
+function run_analysisf()
+    % TODO1:
+    % Load all the sample images from the 'sample_images' folder
+    i1 = imread('sample_images/image_128x128.png');
+    i2 = imread('sample_images/image_256x256.png');
+    i3 = imread('sample_images/image_512x512.png');
+    i4 = imread('sample_images/image_1024x1024.png');
+    i5 = imread('sample_images/image_2048x2048.png');
+    images = {i1, i2, i3, i4, i5};
+        
+    % TODO2:
+    % Define edge detection kernels (Sobel kernel)
+    Kx = [-1 0 1; -2 0 2; -1 0 1];
+    Ky = [1 2 1; 0 0 0; -1 -2 -1];
+
+    % TODO3:
+    % For each image, perform the following:
+    %   a. Measure execution time of my_conv2
+    %   b. Measure execution time of inbuilt_conv2
+    %   c. Compute speedup ratio
+    %   d. Verify output correctness (compare results)
+    %   e. Store results (image name, time_manual, time_builtin, speedup)
+    %   f. Plot and compare results
+    %   g. Visualise the edge detection results(Optional)
+    
+    % Assigning the square image resolution as each image name
+    image_names = [128, 256, 512, 1024, 2048];
+    
+    % Arrays to store benchmarking results per image
+    time_manual = zeros(1,5);
+    time_builtin = zeros(1,5);
+    speedup = zeros(1,5);
+
+    % Celled arrays to store Edge Detection matrices per image
+    edm_manual = cell(5); 
+    edm_builtin = cell(5);
+    
+    % Collecting and storing results
+    for i = 1:5
+        sum_time_manual = 0;
+        sum_time_builtin = 0;
+        reps = 10; % to improve integrity of results
+        for r = 1:reps  
+            [edm_manual{i}, tm] = my_conv2(images{i}, Kx, Ky);
+            [edm_builtin{i}, tb] = inbuilt_conv2(images{i}, Kx, Ky);
+            sum_time_manual = sum_time_manual + tm;
+            sum_time_builtin = sum_time_builtin + tb;
+        end
+        time_manual(i) = sum_time_manual/reps;
+        time_builtin(i) = sum_time_builtin/reps;
+        speedup(i) = time_manual(i)/time_builtin(i);
+    end
+    
+    % Plots for execution time
+    figure;
+    plot(image_names, time_manual, "LineStyle","-","Color","r","LineWidth",1.5);
+    xlabel("Square Image Length (pixels)");
+    ylabel("Execution Time (s)");
+    title("Image Sizes versus Execution Time for 2D Convolution");
+    grid on;
+    hold on;
+    plot(image_names, time_builtin, "LineStyle","-","Color","b","LineWidth",1.5);
+    hold off;
+
+    % Plot for Speed Up
+    figure;
+    plot(image_names, speedup, "LineStyle","-","Color","k","LineWidth",1.5);
+    xlabel("Square Image Length (pixels)");
+    ylabel("Speed Up");
+    title("Image Sizes versus Speed Up Up for 2D Convolution");
+    grid on;
+    
+    % Visualisation of Edge Detection results
+    for e = 1:5
+        resolution = string(image_names(e));
+        figname = "Comparision between Edge Detection images for " + resolution + "x" + resolution + " image";
+        Ia = mat2gray(edm_manual{e});
+        Ib = mat2gray(edm_builtin{e});
+
+        figure
+        subplot(1,2,1), imshow(Ia), title("Edge Detection Image (manual)");
+        subplot(1,2,2), imshow(Ib), title("Edge Detection Image (built in)");
+        sgtitle(figname);
+    end
+end
+
+run_analysisf();
