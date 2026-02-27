@@ -78,7 +78,7 @@ end
 % Compare the performance of manual 2D convolution (my_conv2) with MATLAB's
 % built-in conv2 function (inbuilt_conv2).
 
-function run_analysis()
+function run_analysisf()
     % TODO1:
     % Load all the sample images from the 'sample_images' folder
     i1 = imread('sample_images/image_128x128.png');
@@ -122,7 +122,7 @@ function run_analysis()
     for i = 1:5
         sum_t_manual = 0;
         sum_t_builtin = 0;
-        for r = 1:n  % Repeats the experiment n times
+        for r = 1:n  % Repeat the 
             [edm_manual{i}, t_manual] = my_conv2(images{i}, Kx, Ky);
             [edm_builtin{i}, t_builtin] = inbuilt_conv2(images{i}, Kx, Ky);
             sum_t_manual = sum_t_manual + t_manual;
@@ -185,3 +185,5 @@ function run_analysis()
         sgtitle(figname);
     end 
 end
+
+run_analysisf();
