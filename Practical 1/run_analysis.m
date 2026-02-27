@@ -131,7 +131,7 @@ function run_analysis()
         time_manual(i) = sum_t_manual/n;
         time_builtin(i) = sum_t_builtin/n;
         speedup(i) = time_manual(i)/time_builtin(i);
-        diff_pxli = abs(edm_manual{i} - edm_builtin{i});
+        diff_pxli = abs(edm_builtin{i} - edm_manual{i});
         accuracy(i) = mean(diff_pxli(:));
     end
     
@@ -169,7 +169,7 @@ function run_analysis()
     plot(image_names, accuracy, '.-','MarkerSize', 16, "LineStyle","-","Color","k","LineWidth",2);
     xlabel("Square Image Length (pixels)");
     ylabel("Absolute Average Difference in Pixel-intensity");
-    title("Deviation of Pixel-intensity in the Manual results from the Built-in results");
+    title("Deviation of Pixel-intensity in the Built-in results from the Manual results");
     grid on;
         
     % Visualisation of resulting Edge-detection images
