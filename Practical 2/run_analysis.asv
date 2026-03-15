@@ -160,7 +160,7 @@ end
 % Compare the performance of serial Mandelbrot set computation
 % with parallel Mandelbrot set computation.
 
-function run_analysis()
+function run_analysisf()
     %Array containing all the image sizes to be tested
     image_sizes = [
         [800,600],   %SVGA
@@ -193,77 +193,79 @@ function run_analysis()
     time_parallel_results = cell(1,num_images);
     speedup_results = cell(1,num_images);
     efficiency_results = cell(1,num_images);
-   
-    for i = 1:num_images % Test for all 8 image sizes
 
-        % Determine serial execution time
-        sum_time_serial = 0;
-        for r = 1:repetitions    
-            if (r > warmup_runs)
-                start_time_serial = tic; % start timer
-                iteration_matrix_serial = mandelbrot_serial(max_iterations, image_sizes(i,:));
-                sum_time_serial = sum_time_serial + toc(start_time_serial); % end timer
-            else
-                % Warmup run (not timed)
-                iteration_matrix_serial = mandelbrot_serial(max_iterations, image_sizes(i,:));
-            end
-        end
-        time_serial = sum_time_serial/(repetitions-warmup_runs);
+    % load('results.mat');
+    
+    % for i = 1:num_images % Test for all 8 image sizes
+    % 
+    %     % Determine serial execution time
+    %     sum_time_serial = 0;
+    %     for r = 1:repetitions    
+    %         if (r > warmup_runs)
+    %             start_time_serial = tic; % start timer
+    %             iteration_matrix_serial = mandelbrot_serial(max_iterations, image_sizes(i,:));
+    %             sum_time_serial = sum_time_serial + toc(start_time_serial); % end timer
+    %         else
+    %             % Warmup run (not timed)
+    %             iteration_matrix_serial = mandelbrot_serial(max_iterations, image_sizes(i,:));
+    %         end
+    %     end
+    %     time_serial = sum_time_serial/(repetitions-warmup_runs);
+    % 
+    %     % Plot and save Mandelbrot images
+    %     mandelbrot_plot(iteration_matrix_serial, max_iterations, image_names{i}, 0);  % Plot and save Mandelbrot images
+    % 
+    %     % Temporary arrays for storing Parallel results
+    %     time_parallel = zeros(max_workers-1,1);
+    %     speedup = zeros(max_workers-1,1);
+    %     efficiency = zeros(max_workers-1,1);
+    % 
+    %     for n = 2:max_workers
+    %         %n = 8;
+    % 
+    %         % Setting up parallelisation
+    %         p = gcp('nocreate'); % Use existing pool
+    %         if ~isempty(p)
+    %             delete(p); % Delete existing pool
+    %         end
+    %         parpool(n); % Create pool with n workers
+    % 
+    %         % Determining Parallel Mandelbrot function's execution time
+    %         sum_time_parallel = 0;
+    %         for r = 1:repetitions
+    %             if (r > warmup_runs)
+    %                 start_time_parallel = tic; % start timer
+    %                 iteration_matrix_parallel = mandelbrot_parallel(max_iterations, image_sizes(i,:));
+    %                 sum_time_parallel = sum_time_parallel + toc(start_time_parallel); % end timer
+    %             else
+    %                 % Warmup run (not timed)
+    %                 iteration_matrix_parallel = mandelbrot_parallel(max_iterations, image_sizes(i,:));
+    %             end            
+    %         end
+    % 
+    %         % Calculate execution time, speed up and efficiency for parallel implementation
+    %         time_parallel(n-1) = sum_time_parallel/(repetitions-warmup_runs);
+    %         speedup(n-1) = time_serial/time_parallel(n-1);
+    %         efficiency(n-1) = (speedup(n-1)/n)*100;
+    % 
+    %         % Plot and save mandelbrot image of when max cores are being used
+    %         if (n == max_workers)
+    %             mandelbrot_plot(iteration_matrix_parallel, max_iterations, image_names{i}, n);
+    %         end
+    % 
+    %     end
+    % 
+    %     delete(gcp('nocreate')); % Close the pool
+    % 
+    %     % Saving results
+    %     time_serial_results(i) = time_serial;
+    %     time_parallel_results{i} = time_parallel;
+    %     speedup_results{i} = speedup;
+    %     efficiency_results{i} = efficiency;
+    % 
+    % end
 
-        % Plot and save Mandelbrot images
-        mandelbrot_plot(iteration_matrix_serial, max_iterations, image_names{i}, 0);  % Plot and save Mandelbrot images
-
-        % Temporary arrays for storing Parallel results
-        time_parallel = zeros(max_workers-1,1);
-        speedup = zeros(max_workers-1,1);
-        efficiency = zeros(max_workers-1,1);
-
-        for n = 2:max_workers
-            %n = 8;
-
-            % Setting up parallelisation
-            p = gcp('nocreate'); % Use existing pool
-            if ~isempty(p)
-                delete(p); % Delete existing pool
-            end
-            parpool(n); % Create pool with n workers
-
-            % Determining Parallel Mandelbrot function's execution time
-            sum_time_parallel = 0;
-            for r = 1:repetitions
-                if (r > warmup_runs)
-                    start_time_parallel = tic; % start timer
-                    iteration_matrix_parallel = mandelbrot_parallel(max_iterations, image_sizes(i,:));
-                    sum_time_parallel = sum_time_parallel + toc(start_time_parallel); % end timer
-                else
-                    % Warmup run (not timed)
-                    iteration_matrix_parallel = mandelbrot_parallel(max_iterations, image_sizes(i,:));
-                end            
-            end
-
-            % Calculate execution time, speed up and efficiency for parallel implementation
-            time_parallel(n-1) = sum_time_parallel/(repetitions-warmup_runs);
-            speedup(n-1) = time_serial/time_parallel(n-1);
-            efficiency(n-1) = (speedup(n-1)/n)*100;
-
-            % Plot and save mandelbrot image of when max cores are being used
-            if (n == max_workers)
-                mandelbrot_plot(iteration_matrix_parallel, max_iterations, image_names{i}, n);
-            end
-
-        end
-
-        delete(gcp('nocreate')); % Close the pool
-
-        % Saving results
-        time_serial_results(i) = time_serial;
-        time_parallel_results{i} = time_parallel;
-        speedup_results{i} = speedup;
-        efficiency_results{i} = efficiency;
-
-    end
-
-    % load("results.mat");
+    load("results.mat");
  
     % Plot influence of cores on execution time
     fg1 = figure('Position', [100 100 800 600]);  
@@ -301,7 +303,7 @@ function run_analysis()
     saveas(gcf, "Speed_Up_vs_Number_of_cores.png");
 
     % Plot influence of cores on efficiency
-    fg3 = figure('Position', [100 100 800 600]);  
+    fg6 = figure('Position', [100 100 800 600]);  
     for d = 1:num_images
         plot(2:max_workers, efficiency_results{d}, 'Marker', 'o', 'MarkerSize', 8, 'LineStyle', '-', 'LineWidth', 2);
         hold on;
@@ -317,4 +319,4 @@ function run_analysis()
     save('results.mat', 'time_serial_results', 'time_parallel_results', 'speedup_results', 'efficiency_results');
 end
 
-% run_analysisf();
+run_analysisf();
