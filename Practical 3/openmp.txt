@@ -1,0 +1,260 @@
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 16 -i input/energy10 -o output/energy10.txt
+Running with 16 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000104 s
+Tcomp          : 0.005617 s
+Ttotal         : 0.005721 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 16 -i input/energy10 -o output/energy10.txt
+Running with 16 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000105 s
+Tcomp          : 0.007129 s
+Ttotal         : 0.007234 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 16 -i input/energy10 -o output/energy10.txt
+Running with 16 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000091 s
+Tcomp          : 0.007179 s
+Ttotal         : 0.007270 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 16 -i input/energy10 -o output/energy10.txt
+Running with 16 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000093 s
+Tcomp          : 0.007188 s
+Ttotal         : 0.007281 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 16 -i input/energy10 -o output/energy10.txt
+Running with 16 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000114 s
+Tcomp          : 0.004709 s
+Ttotal         : 0.004823 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy4 -o output/energy4.txt
+Running with 2 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000091 s
+Tcomp          : 0.000086 s
+Ttotal         : 0.000177 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy5 -o output/energy5.txt
+Running with 2 processes/threads on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.000717 s
+Tcomp          : 0.000088 s
+Ttotal         : 0.000805 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy6 -o output/energy6.txt
+Running with 2 processes/threads on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.000672 s
+Tcomp          : 0.000107 s
+Ttotal         : 0.000779 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy7 -o output/energy7.txt
+Running with 2 processes/threads on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.000751 s
+Tcomp          : 0.000115 s
+Ttotal         : 0.000866 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy8 -o output/energy8.txt
+Running with 2 processes/threads on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.000711 s
+Tcomp          : 0.000138 s
+Ttotal         : 0.000849 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy9 -o output/energy9.txt
+Running with 2 processes/threads on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.000679 s
+Tcomp          : 0.000221 s
+Ttotal         : 0.000900 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy10 -o output/energy10.txt
+Running with 2 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000108 s
+Tcomp          : 0.000961 s
+Ttotal         : 0.001069 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy4 -o output/energy4.txt
+Running with 4 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000111 s
+Tcomp          : 0.000179 s
+Ttotal         : 0.000290 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy5 -o output/energy5.txt
+Running with 4 processes/threads on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.000089 s
+Tcomp          : 0.000158 s
+Ttotal         : 0.000247 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy6 -o output/energy6.txt
+Running with 4 processes/threads on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.000088 s
+Tcomp          : 0.000159 s
+Ttotal         : 0.000247 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy7 -o output/energy7.txt
+Running with 4 processes/threads on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.000106 s
+Tcomp          : 0.000209 s
+Ttotal         : 0.000315 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy8 -o output/energy8.txt
+Running with 4 processes/threads on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.000140 s
+Tcomp          : 0.000199 s
+Ttotal         : 0.000339 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy9 -o output/energy9.txt
+Running with 4 processes/threads on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.000091 s
+Tcomp          : 0.000217 s
+Ttotal         : 0.000308 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 4 -i input/energy10 -o output/energy10.txt
+Running with 4 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000177 s
+Tcomp          : 0.000703 s
+Ttotal         : 0.000880 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy4 -o output/energy4.txt
+Running with 8 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000089 s
+Tcomp          : 0.000384 s
+Ttotal         : 0.000473 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy5 -o output/energy5.txt
+Running with 8 processes/threads on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.000105 s
+Tcomp          : 0.000389 s
+Ttotal         : 0.000494 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy6 -o output/energy6.txt
+Running with 8 processes/threads on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.000092 s
+Tcomp          : 0.000415 s
+Ttotal         : 0.000507 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy7 -o output/energy7.txt
+Running with 8 processes/threads on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.000092 s
+Tcomp          : 0.000335 s
+Ttotal         : 0.000427 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy8 -o output/energy8.txt
+Running with 8 processes/threads on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.000096 s
+Tcomp          : 0.000536 s
+Ttotal         : 0.000632 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy9 -o output/energy9.txt
+Running with 8 processes/threads on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.000102 s
+Tcomp          : 0.000423 s
+Ttotal         : 0.000525 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 8 -i input/energy10 -o output/energy10.txt
+Running with 8 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000097 s
+Tcomp          : 0.000751 s
+Ttotal         : 0.000848 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy10 -o output/energy10.txt
+Running with 2 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000094 s
+Tcomp          : 0.000718 s
+Ttotal         : 0.000812 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy4 -o output/energy4.txt
+Running with 2 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000148 s
+Tcomp          : 0.000106 s
+Ttotal         : 0.000254 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy6 -o output/energy6.txt
+Running with 2 processes/threads on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.000166 s
+Tcomp          : 0.000185 s
+Ttotal         : 0.000351 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy7 -o output/energy7.txt
+Running with 2 processes/threads on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.000091 s
+Tcomp          : 0.000118 s
+Ttotal         : 0.000209 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy8 -o output/energy8.txt
+Running with 2 processes/threads on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.000137 s
+Tcomp          : 0.000138 s
+Ttotal         : 0.000275 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy9 -o output/energy9.txt
+Running with 2 processes/threads on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.000102 s
+Tcomp          : 0.000237 s
+Ttotal         : 0.000339 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy10 -o output/energy10.txt
+Running with 2 processes/threads on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.000121 s
+Tcomp          : 0.001031 s
+Ttotal         : 0.001152 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy5 -o output/energy5.txt
+Running with 2 processes/threads on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.000130 s
+Tcomp          : 0.000145 s
+Ttotal         : 0.000275 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy5 -o output/energy5.txt
+Running with 2 processes/threads on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.000135 s
+Tcomp          : 0.000116 s
+Ttotal         : 0.000251 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy4 -o output/energy4.txt
+Running with 2 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000096 s
+Tcomp          : 0.000283 s
+Ttotal         : 0.000379 s
+shara@13-X47:~/Practical3claude/OpenMP$ ./wariara_freights_route -p 2 -i input/energy4 -o output/energy4.txt
+Running with 2 processes/threads on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.000098 s
+Tcomp          : 0.000090 s
+Ttotal         : 0.000188 s
+shara@13-X47:~/Practical3claude/OpenMP$
