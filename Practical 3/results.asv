@@ -22,7 +22,7 @@ comp_speedup_omp = cell(3);
 tot_speedup_omp = cell(3);
 for o2 = 2:4
     comp_speedup_omp(o2-1) = tcomp_omp(1)./tcomp_omp(o2); 
-    tot_speedup_omp(o2-1) = ttot_omp(1)./ttot_omp(o2);
+    tot_speedup_omp(o2-1) = tcomp_omp(1)./tcomp_omp(o2);
 end
 
 %% MPI results
@@ -41,15 +41,8 @@ tcomp_mpi = { % N=4    % N=5    % N=6     % N=7   % N=8     % N=9     % N=10
             };
 
 ttot_mpi = cell(4);
-for m1 = 1:4
-    ttot_mpi(m1) = tinit_mpi(m1) + tcomp_mpi(m1); 
-end
-
-comp_speedup_mpi = cell(3);
-tot_speedup_mpi = cell(3);
-for m2 = 2:4
-    comp_speedup_mpi(m2-1) = tcomp_mpi(1)./tcomp_mpi(m2); 
-    tot_speedup_mpi(m2-1) = ttot_mpi(1)./ttot_mpi(m2);
+for i2 = 1:4
+    ttot_mpi(i2) = tinit_mpi(i2) + tcomp_mpi(i2); 
 end
 
 %% Problem results

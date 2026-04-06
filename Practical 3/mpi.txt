@@ -334,3 +334,250 @@ Tinit          : 0.257239 s
 Tcomp          : 0.000062 s
 Ttotal         : 0.257301 s
 shara@13-X47:~/Practical3claude/MPI$
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy4 -o output/energy4.txt
+Running with 1 MPI processes on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.231683 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.231683 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy4 -o output/energy4.txt
+Running with 1 MPI processes on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.230088 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.230088 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy4 -o output/energy4.txt
+Running with 1 MPI processes on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.230341 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.230341 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy4 -o output/energy4.txt
+Running with 1 MPI processes on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.227177 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.227177 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy4 -o output/energy4.txt
+Running with 1 MPI processes on a graph with 4 nodes
+Optimal route  : 1 4 2 3
+Minimum energy : 105 kWh
+Tinit          : 0.228240 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.228240 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.228346 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.228346 s
+shara@13-X47:~/Practical3claude/MPI$ ^C
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.227058 s
+Tcomp          : 0.000001 s
+Ttotal         : 0.227059 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.227104 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.227104 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.227367 s
+Tcomp          : 0.000001 s
+Ttotal         : 0.227368 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.227669 s
+Tcomp          : 0.000000 s
+Ttotal         : 0.227669 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy5 -o output/energy5.txt
+Running with 1 MPI processes on a graph with 5 nodes
+Optimal route  : 1 4 5 2 3
+Minimum energy : 115 kWh
+Tinit          : 0.227507 s
+Tcomp          : 0.000001 s
+Ttotal         : 0.227508 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy6 -o output/energy6.txt
+Running with 1 MPI processes on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.227731 s
+Tcomp          : 0.000002 s
+Ttotal         : 0.227733 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy6 -o output/energy6.txt
+Running with 1 MPI processes on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.227525 s
+Tcomp          : 0.000002 s
+Ttotal         : 0.227527 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy6 -o output/energy6.txt
+Running with 1 MPI processes on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.227945 s
+Tcomp          : 0.000002 s
+Ttotal         : 0.227947 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy6 -o output/energy6.txt
+Running with 1 MPI processes on a graph with 6 nodes
+Optimal route  : 1 4 6 5 2 3
+Minimum energy : 124 kWh
+Tinit          : 0.230982 s
+Tcomp          : 0.000002 s
+Ttotal         : 0.230984 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy7 -o output/energy7.txt
+Running with 1 MPI processes on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.229690 s
+Tcomp          : 0.000006 s
+Ttotal         : 0.229696 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy7 -o output/energy7.txt
+Running with 1 MPI processes on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.230395 s
+Tcomp          : 0.000006 s
+Ttotal         : 0.230401 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy7 -o output/energy7.txt
+Running with 1 MPI processes on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.227684 s
+Tcomp          : 0.000007 s
+Ttotal         : 0.227691 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy7 -o output/energy7.txt
+Running with 1 MPI processes on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.226859 s
+Tcomp          : 0.000006 s
+Ttotal         : 0.226865 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy7 -o output/energy7.txt
+Running with 1 MPI processes on a graph with 7 nodes
+Optimal route  : 1 4 6 5 3 2 7
+Minimum energy : 145 kWh
+Tinit          : 0.227797 s
+Tcomp          : 0.000009 s
+Ttotal         : 0.227806 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy8 -o output/energy8.txt
+Running with 1 MPI processes on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.228726 s
+Tcomp          : 0.000025 s
+Ttotal         : 0.228751 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy8 -o output/energy8.txt
+Running with 1 MPI processes on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.227198 s
+Tcomp          : 0.000030 s
+Ttotal         : 0.227228 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy8 -o output/energy8.txt
+Running with 1 MPI processes on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.228555 s
+Tcomp          : 0.000030 s
+Ttotal         : 0.228585 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy8 -o output/energy8.txt
+Running with 1 MPI processes on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.226950 s
+Tcomp          : 0.000025 s
+Ttotal         : 0.226975 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy8 -o output/energy8.txt
+Running with 1 MPI processes on a graph with 8 nodes
+Optimal route  : 1 4 6 5 8 3 2 7
+Minimum energy : 155 kWh
+Tinit          : 0.226957 s
+Tcomp          : 0.000024 s
+Ttotal         : 0.226981 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy9 -o output/energy9.txt
+Running with 1 MPI processes on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.228134 s
+Tcomp          : 0.000103 s
+Ttotal         : 0.228237 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy9 -o output/energy9.txt
+Running with 1 MPI processes on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.227527 s
+Tcomp          : 0.000101 s
+Ttotal         : 0.227628 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy9 -o output/energy9.txt
+Running with 1 MPI processes on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.226212 s
+Tcomp          : 0.000125 s
+Ttotal         : 0.226337 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy9 -o output/energy9.txt
+Running with 1 MPI processes on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.227943 s
+Tcomp          : 0.000128 s
+Ttotal         : 0.228071 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy9 -o output/energy9.txt
+Running with 1 MPI processes on a graph with 9 nodes
+Optimal route  : 1 4 9 6 5 8 3 2 7
+Minimum energy : 171 kWh
+Tinit          : 0.226962 s
+Tcomp          : 0.000126 s
+Ttotal         : 0.227088 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy10 -o output/energy10.txt
+Running with 1 MPI processes on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.227409 s
+Tcomp          : 0.000571 s
+Ttotal         : 0.227980 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy10 -o output/energy10.txt
+Running with 1 MPI processes on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.228022 s
+Tcomp          : 0.000596 s
+Ttotal         : 0.228618 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy10 -o output/energy10.txt
+Running with 1 MPI processes on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.229346 s
+Tcomp          : 0.000563 s
+Ttotal         : 0.229909 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy10 -o output/energy10.txt
+Running with 1 MPI processes on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.227022 s
+Tcomp          : 0.000567 s
+Ttotal         : 0.227589 s
+shara@13-X47:~/Practical3claude/MPI$ mpirun -np 1 ./wariara_freights_route -i input/energy10 -o output/energy10.txt
+Running with 1 MPI processes on a graph with 10 nodes
+Optimal route  : 1 10 4 9 6 5 8 3 2 7
+Minimum energy : 207 kWh
+Tinit          : 0.227286 s
+Tcomp          : 0.000625 s
+Ttotal         : 0.227911 s
+shara@13-X47:~/Practical3claude/MPI$
