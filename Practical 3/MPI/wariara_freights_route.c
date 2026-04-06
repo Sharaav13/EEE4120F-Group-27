@@ -19,27 +19,18 @@
 #include <fcntl.h>
 #include <sys/time.h>
 #include <string.h>
-#include "mpi.h"
 #include <limits.h>
+#include "mpi.h"
 
 #define MAX_N 10
 
- typedef struct {
-        int path[MAX_N];      // ordered list of cities visited so far
-        int path_length;      // how many cities are in path
-        int cost_so_far;      // accumulated energy cost so far
-        int visited[MAX_N];   // visited[i] = 1 if city i is already in path
-    } Subproblem;
 // ============================================================================
 // Global variables
 // ============================================================================
 
 int n; // If this is -1, it signals an error/exit
-int best_cost=INT_MAX;;
 int adj[MAX_N][MAX_N];
-int best_path[MAX_N];
 
-void branch_and_bound(Subproblem sp);
 // ============================================================================
 // Timer: returns time in seconds
 // ============================================================================
@@ -55,7 +46,6 @@ double gettime()
 // Usage function
 // ============================================================================
 
-
 void Usage(char *program) {
   printf("Usage: mpirun -np <num> %s [options]\n", program);
   printf("-i <file>\tInput file name\n");
@@ -63,26 +53,113 @@ void Usage(char *program) {
   printf("-h \t\tDisplay this help\n");
 }
 
+// ============================================================================
+// Greedy nearest-neighbour heuristic – provides a tight initial upper bound
+// so that B&B prunes aggressively from the very first branch.
+// Each process runs this independently (no communication needed).
+// ============================================================================
+
+int greedy_bound(int *out_path)
+{
+    int visited[MAX_N] = {0};
+    out_path[0] = 0;
+    visited[0]  = 1;
+    int total   = 0;
+
+    for (int step = 1; step < n; step++) {
+        int prev = out_path[step - 1];
+        int best_next = -1, best_edge = INT_MAX;
+        for (int j = 0; j < n; j++) {
+            if (!visited[j] && adj[prev][j] < best_edge) {
+                best_edge = adj[prev][j];
+                best_next = j;
+            }
+        }
+        visited[best_next] = 1;
+        out_path[step] = best_next;
+        total += best_edge;
+    }
+    return total;
+}
+
+// ============================================================================
+// Process-local B&B state  (each MPI process has its own private copy)
+//
+// local_best_cost / local_best_path: ALWAYS a consistent pair – updated
+//   together only when THIS process finds a better complete route.
+//   Used for result collection at the end.
+//
+// prune_bound: the global minimum cost known so far, tightened after every
+//   branch via MPI_Allreduce.  Used for pruning so that discoveries on other
+//   processes benefit all processes.  Updated independently of local_best_path
+//   so the cost/path pair always remains consistent.
+// ============================================================================
+
+int local_best_cost;
+int local_best_path[MAX_N];
+int prune_bound;
+
+// ============================================================================
+// Recursive Branch-and-Bound kernel.
+// Entirely local – no MPI calls inside; communication happens between
+// top-level branches in main() to keep the implementation simple and clean.
+// ============================================================================
+
+void branch_and_bound(int *path, int path_len, int *visited, int current_cost)
+{
+    /* Base case: all cities visited → complete route */
+    if (path_len == n) {
+        if (current_cost < local_best_cost) {
+            local_best_cost = current_cost;
+            memcpy(local_best_path, path, n * sizeof(int));
+        }
+        return;
+    }
+
+    int prev = path[path_len - 1];
+
+    for (int next = 0; next < n; next++) {
+        if (visited[next]) continue;
+
+        int new_cost = current_cost + adj[prev][next];
+
+        if (new_cost >= prune_bound) continue;   /* prune using global bound */
+
+        visited[next]  = 1;
+        path[path_len] = next;
+
+        branch_and_bound(path, path_len + 1, visited, new_cost);
+
+        visited[next] = 0;   /* backtrack */
+    }
+}
+
+// ============================================================================
+// Main
+// ============================================================================
 
 int main(int argc, char **argv)
 {
+    /* Start Tinit immediately – covers MPI_Init, arg parse, file I/O,
+       broadcasts, and greedy initialisation.                              */
+    double t_init_start = gettime();
+
     int rank, nprocs;
     int opt;
     int i, j;
-    char *input_file = NULL;
+    char *input_file  = NULL;
     char *output_file = NULL;
-    FILE *infile = NULL;
-    FILE *outfile = NULL;
-    int success_flag = 1; // 1 = good, 0 = error/help encountered
+    FILE *infile      = NULL;
+    FILE *outfile     = NULL;
+    int   success_flag = 1; // 1 = good, 0 = error/help encountered
 
     // Initialize MPI
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
-    // Every process that runs gets a unique rank
 
 
-    if (rank == 0) { //Only master process handles file I/O
+    if (rank == 0) {
         n = -1; 
 
         while ((opt = getopt(argc, argv, "i:o:h")) != -1)
@@ -108,7 +185,6 @@ int main(int argc, char **argv)
             }
         }
 
-        
     
         if (success_flag) {
             infile = fopen(input_file, "r");
@@ -143,8 +219,7 @@ int main(int argc, char **argv)
     }
 
 
-    MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD); //sends data from rank 0 to all other processes simultaneously,
-    //  everyprocess has an identical copy of n and the full adjacency matrix.
+    MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     
     if (n == -1) {
@@ -152,131 +227,154 @@ int main(int argc, char **argv)
         return 0; 
     }
 
-   
-
-  
     MPI_Bcast(&adj[0][0], MAX_N * MAX_N, MPI_INT, 0, MPI_COMM_WORLD);
 
-    if (rank == 0) {
+    // =========================================================================
+    // TODO: compute solution to minimum energy consumption problem here
+    //       and write to output file.
+    //       Be careful on which process rank writes to the output file!
+    // =========================================================================
 
-    /* Initialise best_cost to largest possible integer 
-       so any complete route will beat it */
-    best_cost = INT_MAX;
+    /*
+     * DECOMPOSITION STRATEGY
+     * ----------------------
+     * The search tree is rooted at City 0 (City 1 in 1-indexed terms).
+     * There are (n-1) first-level branches – one per possible second city.
+     * We distribute these branches across processes using static striping:
+     *
+     *   Process r handles branches:  first = r+1, r+1+nprocs, r+1+2*nprocs, ...
+     *
+     * Each process runs a fully sequential DFS/B&B on its assigned subtrees
+     * using only process-local state (local_best_cost, local_best_path).
+     *
+     * BOUND SHARING (cross-process pruning)
+     * ---------------------------------------
+     * After finishing each top-level branch, every process participates in
+     * an MPI_Allreduce(MPI_MIN) to share the current best cost globally.
+     * This lets processes prune using bounds discovered by other processes,
+     * improving efficiency without requiring communication inside the
+     * recursive kernel.
+     *
+     * RESULT COLLECTION
+     * -----------------
+     * After all branches are processed, a final MPI_Allreduce finds the
+     * global minimum cost.  MPI_MINLOC on an {int cost, int rank} pair
+     * identifies which process holds the winning path.  That process
+     * broadcasts the path to rank 0, which writes the output file.
+     *
+     * TIMING
+     * ------
+     * Tinit = t_init_start  →  t_comp_start   (setup + broadcasts + greedy)
+     * Tcomp = t_comp_start  →  t_comp_end     (parallel B&B only)
+     */
 
-    /* Set up the initial subproblem — start at city 0 (1-indexed: city 1) */
-    Subproblem sp;
-    sp.path[0] = 0;        /* start at city 0 */
-    sp.path_length = 1;    /* one city committed so far */
-    sp.cost_so_far = 0;    /* no cost yet */
+    /* Each process seeds its local best from the greedy heuristic */
+    local_best_cost = greedy_bound(local_best_path);
 
-    /* Mark all cities as unvisited, then mark city 0 as visited */
-    int i;
-    for (i = 0; i < n; i++) {
-        sp.visited[i] = 0;
-    }
-    sp.visited[0] = 1;
+    /* Share the tightest greedy bound across all processes so pruning
+       is as aggressive as possible before the first branch starts.
+       Only prune_bound is updated here – local_best_cost/path remain
+       a consistent pair representing what THIS process actually found. */
+    prune_bound = local_best_cost;
+    MPI_Allreduce(MPI_IN_PLACE, &prune_bound, 1, MPI_INT,
+                  MPI_MIN, MPI_COMM_WORLD);
 
-    /* Run branch and bound from this starting subproblem */
-    branch_and_bound(sp);   
+    /* ------------------------------------------------------------------ */
+    double t_comp_start = gettime();
+    double Tinit = t_comp_start - t_init_start;
+    /* ------------------------------------------------------------------ */
 
-    /* Print result — convert from 0-indexed to 1-indexed for output */
-    printf("Best cost: %d\n", best_cost);
-    printf("Best route: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", best_path[i] + 1);  /* +1 converts to 1-indexed */
-    }
-    printf("\n");
-}
-    
-    printf("Process %d received adjacency matrix:\n", rank);
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            printf("%d ", adj[i][j]);
+    /*
+     * Main parallel loop: each process works on its stripe of first-level
+     * branches.  Between branches, all processes synchronise their best
+     * bound via MPI_Allreduce so that new discoveries prune future work.
+     */
+    for (int first = 1; first < n; first++)
+    {
+        /* Static stripe: this process owns branches where
+           (first - 1) % nprocs == rank                      */
+        if ((first - 1) % nprocs == rank)
+        {
+            int path[MAX_N];
+            int visited[MAX_N];
+            memset(visited, 0, n * sizeof(int));
+
+            path[0]        = 0;
+            path[1]        = first;
+            visited[0]     = 1;
+            visited[first] = 1;
+
+            int cost = adj[0][first];
+
+            if (cost < prune_bound) {
+                branch_and_bound(path, 2, visited, cost);
+                /* If B&B found a better route, tighten our prune_bound too
+                   so the allreduce shares the tightest possible value */
+                if (local_best_cost < prune_bound)
+                    prune_bound = local_best_cost;
+            }
         }
-        printf("\n");
+
+        /*
+         * After every branch, share the tightest cost found so far globally.
+         * Only prune_bound is updated here – local_best_cost and local_best_path
+         * remain a consistent pair representing only what THIS process found.
+         * This is the fix for the path corruption bug: previously local_best_cost
+         * was overwritten by allreduce, causing it to drift out of sync with
+         * local_best_path and producing wrong paths at result collection.
+         */
+        MPI_Allreduce(MPI_IN_PLACE, &prune_bound, 1, MPI_INT,
+                      MPI_MIN, MPI_COMM_WORLD);
     }
-    printf("\n");
 
-        
-    // TODO: compute solution to minimum energy consumption problem here and write to output file
-    // Be careful on which process rank writes to the output file to avoid conflicts!
-    
-    
+    /* ------------------------------------------------------------------ */
+    double t_comp_end = gettime();
+    double Tcomp = t_comp_end - t_comp_start;
+    /* ------------------------------------------------------------------ */
 
-   
-    
-/*
- branch_and_bound(Subproblem sp)
-    if sp.path_length == n         ← base case: complete route
-        update best if sp.cost_so_far < best
-        return
-    
-    for each unvisited city i:
-        if sp.cost_so_far + adj[last_city][i] >= best_bound
-            skip (prune this branch)
-        else
-            add city i to sp
-            branch_and_bound(sp)   ← recurse deeper
-            remove city i from sp  ← backtrack
+    /*
+     * RESULT COLLECTION
+     * Each process reports local_best_cost, which is ALWAYS a consistent pair
+     * with local_best_path (only updated when THIS process finds a better route,
+     * never overwritten by allreduce).  MPI_MINLOC finds the winning rank and
+     * that process broadcasts its path.
+     */
+    int local_pair[2]  = { local_best_cost, rank };
+    int global_pair[2] = { 0, 0 };
+
+    MPI_Allreduce(local_pair, global_pair, 1, MPI_2INT,
+                  MPI_MINLOC, MPI_COMM_WORLD);
+
+    int winner_rank = global_pair[1];
+    int global_best = global_pair[0];
+
+    /* The winning process broadcasts its path to all (including rank 0) */
+    int final_path[MAX_N];
+    if (rank == winner_rank)
+        memcpy(final_path, local_best_path, n * sizeof(int));
+
+    MPI_Bcast(final_path, n, MPI_INT, winner_rank, MPI_COMM_WORLD);
+
+    /* ---- Only rank 0 writes the output file and prints the summary ---- */
+    if (rank == 0) {
+        for (i = 0; i < n; i++) {
+            fprintf(outfile, "%d", final_path[i] + 1);
+            if (i < n - 1) fprintf(outfile, " ");
+        }
+        fprintf(outfile, "\n");
+        fprintf(outfile, "Minimum energy cost: %d kWh\n", global_best);
+        fclose(outfile);
+
+        printf("Running with %d MPI processes on a graph with %d nodes\n",
+               nprocs, n);
+        printf("Optimal route  : ");
+        for (i = 0; i < n; i++) printf("%d ", final_path[i] + 1);
+        printf("\nMinimum energy : %d kWh\n", global_best);
+        printf("Tinit          : %.6f s\n", Tinit);
+        printf("Tcomp          : %.6f s\n", Tcomp);
+        printf("Ttotal         : %.6f s\n", Tinit + Tcomp);
+    }
 
     MPI_Finalize();
     return 0;
-
-*/
-
-
-}
-
-
-void branch_and_bound(Subproblem sp) {
-    int i;
-    int last_city;
-    int edge_cost;
-
-    /* Base case: complete route — all cities have been visited */
-    if (sp.path_length == n) {
-
-        /* Update best if this complete route beats the current best */
-        if (sp.cost_so_far < best_cost) {
-            best_cost = sp.cost_so_far;
-
-            /* Save this route as the new best path */
-            for (i = 0; i < n; i++) {
-                best_path[i] = sp.path[i];
-            }
-        }
-        return;
-    }
-    
-    /* Get the last city added to the partial route */
-    last_city = sp.path[sp.path_length - 1];
-
-    /* Try extending the route with each unvisited city */
-    for (i = 0; i < n; i++) {
-
-        /* Skip cities already in the partial route */
-        if (sp.visited[i]) continue;
-
-        /* Calculate the cost of travelling to city i from last_city */
-        edge_cost = adj[last_city][i];
-
-        /* Prune: if adding this edge already exceeds best known cost, skip */
-        if (sp.cost_so_far + edge_cost >= best_cost) continue;
-
-        /* Add city i to the partial route */
-        sp.path[sp.path_length] = i;
-        sp.visited[i] = 1;
-        sp.cost_so_far += edge_cost;
-        sp.path_length++;
-
-        /* Recurse deeper into this branch */
-        branch_and_bound(sp);
-
-        /* Backtrack: remove city i from the partial route */
-        sp.path_length--;
-        sp.cost_so_far -= edge_cost;
-        sp.visited[i] = 0;
-    }
-
-
 }

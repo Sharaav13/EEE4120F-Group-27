@@ -1,0 +1,2 @@
+1 4 6 5 8 3 2 7
+Minimum energy cost: 155 kWh
